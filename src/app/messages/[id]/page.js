@@ -43,7 +43,7 @@ export default function ViewMessagePage({ params }) {
     return <div className="min-h-screen bg-white flex items-center justify-center">Message not found</div>
   }
 
-  const isReceiver = currentUserId === message.receiverId
+  const isReceiver = currentUserId === message.receiverId.toString()
   const otherUser = isReceiver ? message.sender : message.receiver
 
   return (
