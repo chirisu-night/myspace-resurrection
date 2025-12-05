@@ -23,7 +23,8 @@ export async function GET(request, { params }) {
 
     return NextResponse.json(profile)
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch profile' }, { status: 500 })
+    console.error('Profile fetch error:', error)
+    return NextResponse.json({ error: 'Failed to fetch profile', details: error.message }, { status: 500 })
   }
 }
 
