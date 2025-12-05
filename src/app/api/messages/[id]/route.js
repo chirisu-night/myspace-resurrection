@@ -14,8 +14,8 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: 'Message not found' }, { status: 404 })
     }
 
-    // Verify user is sender or receiver
-    if (!userId || (message.senderId !== userId && message.receiverId !== userId)) {
+    // Verify user is sender or receiver (convert to string for comparison)
+    if (!userId || (message.senderId.toString() !== userId && message.receiverId.toString() !== userId)) {
       return NextResponse.json(
         { error: 'Not authorized to view this message' },
         { status: 403 }
