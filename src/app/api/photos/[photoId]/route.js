@@ -23,7 +23,7 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ error: 'Photo not found' }, { status: 404 })
     }
 
-    if (photo.album.userId !== userId) {
+    if (photo.album.userId.toString() !== userId) {
       return NextResponse.json(
         { error: 'Not authorized to edit this photo' },
         { status: 403 }
@@ -73,7 +73,7 @@ export async function DELETE(request, { params }) {
       return NextResponse.json({ error: 'Photo not found' }, { status: 404 })
     }
 
-    if (photo.album.userId !== userId) {
+    if (photo.album.userId.toString() !== userId) {
       return NextResponse.json(
         { error: 'Not authorized to delete this photo' },
         { status: 403 }
