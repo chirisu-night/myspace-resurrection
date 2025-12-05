@@ -80,7 +80,7 @@ export default function AlbumViewPage({ params }) {
       const res = await fetch(`/api/photos/${photoId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ caption: editCaption })
+        body: JSON.stringify({ caption: editCaption, userId: currentUserId })
       })
 
       if (res.ok) {
@@ -99,12 +99,15 @@ export default function AlbumViewPage({ params }) {
     }
 
     try {
-      const res = await fetch(`/api/photos/${photoId}`, {
+      const res = await fetch(`/api/photos/${photoId}?userId=${currentUserId}`, {
         method: 'DELETE'
       })
 
       if (res.ok) {
         loadAlbum()
+      } else {
+        const data = await res.json()
+        alert(data.error || 'Failed to delete photo')
       }
     } catch (error) {
       console.error('Failed to delete photo:', error)
