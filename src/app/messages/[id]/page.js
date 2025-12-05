@@ -17,7 +17,8 @@ export default function ViewMessagePage({ params }) {
 
   const loadMessage = async () => {
     try {
-      const res = await fetch(`/api/messages/${params.id}`)
+      const userId = localStorage.getItem('userId')
+      const res = await fetch(`/api/messages/${params.id}?userId=${userId}`)
       if (res.ok) {
         const data = await res.json()
         setMessage(data)
