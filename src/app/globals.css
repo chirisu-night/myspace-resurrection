@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #d4e4f4;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Optional tiled background patterns */
+body.pattern-hearts {
+  background-image: repeating-linear-gradient(45deg, #ffc0cb 0px, #ffc0cb 10px, #ff69b4 10px, #ff69b4 20px);
+}
+
+body.pattern-checkerboard {
+  background-image: 
+    repeating-linear-gradient(0deg, #000 0px, #000 25px, #fff 25px, #fff 50px),
+    repeating-linear-gradient(90deg, #000 0px, #000 25px, #fff 25px, #fff 50px);
+  background-blend-mode: difference;
+}
+
+body.pattern-stars {
+  background: #000;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, white, transparent),
+    radial-gradient(2px 2px at 60px 70px, white, transparent),
+    radial-gradient(1px 1px at 50px 50px, white, transparent),
+    radial-gradient(1px 1px at 130px 80px, white, transparent),
+    radial-gradient(2px 2px at 90px 10px, white, transparent);
+  background-size: 200px 100px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 150px 200px;
+}
+
+.myspace-header {
+  background: linear-gradient(to bottom, #6699cc, #3366cc);
+  border-bottom: 3px solid #003366;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.myspace-logo {
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.myspace-box {
+  background: #fff;
+  border: 2px solid #ccc;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+  margin-bottom: 12px;
+}
+
+.myspace-box-header {
+  background: linear-gradient(to bottom, #6699cc, #5588bb);
+  color: white;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-bottom: 2px solid #4477aa;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Colorful header variations */
+.myspace-box-header.orange {
+  background: linear-gradient(to bottom, #ff9966, #ff7733);
+  border-bottom: 2px solid #cc5500;
+}
+
+.myspace-box-header.green {
+  background: linear-gradient(to bottom, #66cc66, #44aa44);
+  border-bottom: 2px solid #338833;
+}
+
+.myspace-box-header.purple {
+  background: linear-gradient(to bottom, #9966ff, #7744dd);
+  border-bottom: 2px solid #5522aa;
+}
+
+.myspace-box-header.pink {
+  background: linear-gradient(to bottom, #ff66cc, #ff3399);
+  border-bottom: 2px solid #cc0066;
+}
+
+.myspace-box-header.teal {
+  background: linear-gradient(to bottom, #66cccc, #44aaaa);
+  border-bottom: 2px solid #338888;
+}
+
+.myspace-table {
+  background: #e8f1f8;
+  border: 1px solid #b3d1e6;
+  font-size: 11px;
+}
+
+.myspace-table-row {
+  background: #f0f6fc;
+  border-bottom: 1px solid #d0e0f0;
+}
+
+.myspace-table-row:nth-child(even) {
+  background: #e8f1f8;
+}
+
+.myspace-table-label {
+  background: linear-gradient(to right, #b3d4f1, #d4e4f4);
+  font-weight: bold;
+  color: #003366;
+  padding: 4px 8px;
+  width: 110px;
+  font-size: 11px;
+}
+
+.custom-content {
+  word-wrap: break-word;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.custom-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.myspace-button {
+  background: linear-gradient(to bottom, #6699cc, #5588bb);
+  border: 1px solid #4477aa;
+  color: white;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.myspace-button:hover {
+  background: linear-gradient(to bottom, #5588bb, #4477aa);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.myspace-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.myspace-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Sparkle effect */
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.sparkle {
+  position: relative;
+}
+
+.sparkle::before,
+.sparkle::after {
+  content: '✨';
+  position: absolute;
+  animation: sparkle 2s infinite;
+}
+
+.sparkle::before {
+  top: -10px;
+  left: -10px;
+  animation-delay: 0s;
+}
+
+.sparkle::after {
+  bottom: -10px;
+  right: -10px;
+  animation-delay: 1s;
+}
+
+/* Glitter text effect */
+.glitter-text {
+  background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glitter 3s ease infinite;
+  font-weight: bold;
+}
+
+@keyframes glitter {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Blink effect for online status */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.blink {
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .myspace-header {
+    padding: 0.5rem;
+  }
+
+  .myspace-header .flex {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .myspace-header .flex > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .myspace-box {
+    margin-bottom: 0.75rem;
+  }
+
+  .myspace-box-header {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .myspace-table {
+    font-size: 11px;
+  }
+
+  .myspace-table-label {
+    padding: 4px 8px;
+    width: 100px;
+  }
+
+  /* Make profile layout stack on mobile */
+  .grid.lg\\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Adjust Top 8 grid for mobile */
+  .grid.grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Make buttons stack on mobile */
+  .flex.gap-2, .flex.gap-4 {
+    flex-wrap: wrap;
+  }
+
+  .myspace-button {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+}

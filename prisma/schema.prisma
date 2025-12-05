@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  username      String    @unique
+  password      String
+  createdAt     DateTime  @default(now())
+  lastLogin     DateTime?
+  profile       Profile?
+  comments      Comment[]
+  friendsAdded  Friend[]  @relation("UserFriends")
+  friendsOf     Friend[]  @relation("FriendOf")
+  bulletins     Bulletin[]
+}
+
+model Profile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name             String
+  bio              String?
+  customHTML       String?
+  customCSS        String?
+  status           String?
+  hometown         String?
+  zodiacSign       String?
+  hereFor          String?
+  blurbsTitle      String?
+  friendSpaceTitle String?
+  commentsTitle    String?
+  contactingTitle  String?
+  detailsTitle     String?
+  interestsTitle   String?
+  schoolsTitle     String?
+  musicTitle       String?
+  profilePhoto     String?
+  backgroundImage  String?
+  profileMusic     String?
+  musicAutoplay    Boolean?  @default(false)
+  mood             String?
+  whoIdLikeToMeet  String?
+  age              Int?
+  gender           String?
+  location         String?
+  musicInterests   String?
+  movieInterests   String?
+  tvInterests      String?
+  bookInterests    String?
+  heroesInterests  String?
+  schools          String?
+  profileViews     Int       @default(0)
+  updatedAt        DateTime  @updatedAt
+}
+
+model Friend {
+  id        String   @id @default(cuid())
+  userId    String
+  friendId  String
+  user      User     @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
+  friend    User     @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, friendId])
+  @@index([userId])
+  @@index([friendId])
+}
+
+model Top8 {
+  id        String   @id @default(cuid())
+  userId    String
+  friendId  String
+  position  Int
+  createdAt DateTime @default(now())
+
+  @@unique([userId, position])
+  @@index([userId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  profileId String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([profileId])
+  @@index([authorId])
+}
+
+model Bulletin {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  subject    String
+  content    String
+  senderId   String
+  receiverId String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([receiverId])
+  @@index([senderId])
+}
+
+model Block {
+  id         String   @id @default(cuid())
+  blockerId  String
+  blockedId  String
+  createdAt  DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
+  @@index([blockerId])
+  @@index([blockedId])
+}
+
+model Album {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  userId      String
+  createdAt   DateTime @default(now())
+  photos      Photo[]
+}
+
+model Photo {
+  id          String   @id @default(cuid())
+  url         String
+  caption     String?
+  albumId     String
+  album       Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
