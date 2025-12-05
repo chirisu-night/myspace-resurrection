@@ -1,36 +1,31 @@
 // Server-side HTML sanitization utility
 // This prevents XSS attacks from user-generated HTML content
-
-import DOMPurify from 'isomorphic-dompurify'
+// Using simple regex-based sanitization for serverless compatibility
 
 export function sanitizeHTML(html) {
   if (!html) return ''
   
-  // Use DOMPurify with strict configuration
-  const clean = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'p', 'br', 'hr', 'div', 'span',
-      'strong', 'em', 'u', 'i', 'b',
-      'ul', 'ol', 'li',
-      'a', 'img',
-      'table', 'thead', 'tbody', 'tr', 'td', 'th',
-      'blockquote', 'pre', 'code'
-    ],
-    ALLOWED_ATTR: [
-      'href', 'src', 'alt', 'title', 'class', 'id', 'style'
-    ],
-    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
-    ALLOW_DATA_ATTR: false,
-    ALLOW_UNKNOWN_PROTOCOLS: false,
-    SAFE_FOR_TEMPLATES: true,
-    WHOLE_DOCUMENT: false,
-    RETURN_DOM: false,
-    RETURN_DOM_FRAGMENT: false,
-    FORCE_BODY: false,
-    SANITIZE_DOM: true,
-    KEEP_CONTENT: true,
-  })
+  // Remove script tags and their content
+  let clean = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+  
+  // Remove event handlers (onclick, onerror, etc.)
+  clean = clean.replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, '')
+  clean = clean.replace(/\s*on\w+\s*=\s*[^\s>]*/gi, '')
+  
+  // Remove javascript: protocol
+  clean = clean.replace(/javascript:/gi, '')
+  
+  // Remove data: protocol (can be used for XSS)
+  clean = clean.replace(/data:text\/html/gi, '')
+  
+  // Remove iframe, object, embed tags
+  clean = clean.replace(/<(iframe|object|embed|applet)[^>]*>.*?<\/\1>/gi, '')
+  
+  // Remove style tags with javascript
+  clean = clean.replace(/<style[^>]*>[\s\S]*?expression\s*\([\s\S]*?<\/style>/gi, '')
+  
+  // Limit length
+  clean = clean.substring(0, 50000)
   
   return clean
 }
