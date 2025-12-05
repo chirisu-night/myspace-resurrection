@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function ComposeMessagePage() {
+function ComposeMessageForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const toUserId = searchParams.get('to')
@@ -129,5 +129,13 @@ export default function ComposeMessagePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ComposeMessagePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <ComposeMessageForm />
+    </Suspense>
   )
 }
